@@ -31,7 +31,7 @@ public class EventDAO {
 
       em.remove(eventToremove);
       trc.commit();
-      System.out.println("The event was removed successfully");
+      System.out.println("The even was removed successfully");
     } else {
       System.out.println("There was not found element with this id.");
     }

@@ -2,11 +2,9 @@ package vasilivanov.entities;
 
 import vasilivanov.enums.EventType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "events")
@@ -16,15 +14,17 @@ public class Event {
   private long id;
   private String title;
   private LocalDate eventDate;
+  @Enumerated(EnumType.STRING)
   private EventType eventType;
   private int maxPartecipants;
 
   public Event() {
   }
 
-  public Event(String title, LocalDate eventDate, EventType eventType, int maxPartecipants) {
+  public Event(String title, String eventDate, EventType eventType, int maxPartecipants) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
     this.title = title;
-    this.eventDate = eventDate;
+    this.eventDate = LocalDate.parse(eventDate, formatter);
     this.eventType = eventType;
     this.maxPartecipants = maxPartecipants;
   }
@@ -63,5 +63,16 @@ public class Event {
 
   public void setMaxPartecipants(int maxPartecipants) {
     this.maxPartecipants = maxPartecipants;
+  }
+
+  @Override
+  public String toString() {
+    return "Event{" +
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", eventDate=" + eventDate +
+            ", eventType=" + eventType +
+            ", maxPartecipants=" + maxPartecipants +
+            '}';
   }
 }
